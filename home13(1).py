@@ -2,10 +2,7 @@
 N = int (input('Bведите число (размер списка) > 0: '))
 if N > 0:
     import random
-    list = []
-    for i in range(N):
-        list.append(i)
-    random.shuffle(list)
+    list = random.sample(range(100), N)
     print(f"Сгенерированный список: {list}")
     if N == 1:
         print("В списке нет элементов, стоящих на нечетных позициях!")
