@@ -7,21 +7,29 @@ k = int (input('Задайте степеь многочлена (введите
 if k > 0:
     my_string = ""
     while k >= 0:
-        r = random.randint(0,100)
-        symbol_random = random.randint(0,10)
-        symbol = " + "
-        if symbol_random%2 > 0:
-            symbol = " - "
+        r = random.randint(-1,1)
         if r>0:
-            if k !=0:
-                my_string += str(r) + "x^" + str(k) + symbol
+            if my_string != "":
+                my_string += " + "
+            if k > 1:
+                my_string += str(r) + "x^" + str(k) 
+            elif k==1:
+               my_string += str(r) + "x"
             else:
                 my_string += str(r)
+        elif r<0:
+            my_string += " - "
+            if k > 1:
+                my_string +=  str(abs(r)) + "x^" + str(k)
+            elif k==1:
+               my_string += str(abs(r)) + "x" 
+            else:
+                my_string +=  str(abs(r))
         k = k-1
     else:
         my_string += " = 0"
         data = open (r"equation.txt", "w")
         data.write(my_string)
-        data.close() 
+        data.close()  
 else:
     print("Ошибка ввода!")
