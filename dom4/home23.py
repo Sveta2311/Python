@@ -16,6 +16,8 @@ data2 = data2.split()
 data1new = []
 data2new = []
 
+eqation = []
+
 for elem in range(len(data1) - 1):
     if elem != 0:
         if elem%2 != 0:
@@ -34,11 +36,15 @@ data2new.pop()
 print(data1new)
 print(data2new)
 
+for i in range(len(data1new)):
+    data1new[i] = data1new[i].replace("+", "").split("x^")
+    
+else:
+    print(data1new)
 
 
-
-file3 = open (r"numbers3.txt", "w")
-file3.write("123")
-file3.close()
-
+for i in range(len(data2new)):
+    data2new[i] = data2new[i].replace("+", "").split("x^")
+else:
+    print(data2new)
 
