@@ -16,7 +16,7 @@ data2 = data2.split()
 data1new = []
 data2new = []
 
-eqation = []
+eqation = {}
 
 for elem in range(len(data1) - 1):
     if elem != 0:
@@ -38,7 +38,8 @@ print(data2new)
 
 for i in range(len(data1new)):
     data1new[i] = data1new[i].replace("+", "").split("x^")
-    
+    print(int(data1new[i][0]))
+    print(int(data1new[i][1]))
 else:
     print(data1new)
 
