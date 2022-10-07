@@ -1,51 +1,68 @@
 # Даны два файла, в каждом из которых находится запись многочлена.
 # Задача - сформировать файл, содержащий сумму многочленов.
 
-file1 = open (r"numbers1.txt", "r")
-file2 = open (r"numbers2.txt", "r")
-data1 = file1.read()
-data2 = file2.read()
-file1.close()
-file2.close()
+from pickle import TRUE
 
 
-data1 = data1.split()
-data2 = data2.split()
+def readEquation(path):
+    file = open (path, "r")
+    firstEquation =  file.read()
+    file.close()
+    eqation = {}
 
 
-data1new = []
-data2new = []
+    firstEquation = firstEquation.replace(" + ", " +").replace(" - ", " -").split()[:-2]
+    for i in range(len(firstEquation)):
+        firstEquation[i] = firstEquation[i].replace("+", "").split("x^")
+        if firstEquation[i][0] == "":
+           firstEquation[i][0] = '1' 
+        if len(firstEquation[i]) < 2:
+            firstEquation[i].append('0')
+          
+        eqation[int(firstEquation[i][1])] = int(firstEquation[i][0])
 
-eqation = {}
+    return eqation
 
-for elem in range(len(data1) - 1):
-    if elem != 0:
-        if elem%2 != 0:
-            data1new.append(data1[elem] + data1[elem + 1])
-    else:
-        data1new.append(data1[elem])  
+finalWord = {}
 
-for elem in range(len(data2) - 1):
-    if elem != 0:
-        if elem%2 != 0:
-            data2new.append(data2[elem] + data2[elem + 1])
-    else:
-        data2new.append(data2[elem])       
-data1new.pop()
-data2new.pop()
-print(data1new)
-print(data2new)
-
-for i in range(len(data1new)):
-    data1new[i] = data1new[i].replace("+", "").split("x^")
-    print(int(data1new[i][0]))
-    print(int(data1new[i][1]))
-else:
-    print(data1new)
+word1 = readEquation(r"numbers1.txt")
+word2 = readEquation(r"numbers2.txt")
 
 
-for i in range(len(data2new)):
-    data2new[i] = data2new[i].replace("+", "").split("x^")
-else:
-    print(data2new)
+for i in range(max(len(word1), len(word2)) + 1, -1, -1):
+    first = word1.get(i)
+    second = word2.get(i)
+    if first != None or second != None:
+        finalWord[i] = (first if first != None else 0) + (second if second != None else 0)
 
+finalString = ""
+First = True
+for item in finalWord:
+    symbol = "+ "
+    last = "x^"
+    degree = item
+
+    if finalWord[item] < 0:
+        symbol = "- "
+    if First and finalWord[item] >= 0:
+        symbol = ""
+    if First and finalWord[item] < 0:
+        symbol = "-"
+    finalWord[item] = abs(finalWord[item])
+    if finalWord[item] == 1:
+        finalWord[item] = ""
+    
+    if item == 1:
+        last = "x"
+        degree = ""
+    if item < 1:
+        last = ""
+        degree = ""
+    finalString += symbol+str(finalWord[item])+last+str(degree)+" "
+    First = False
+
+finalString += "= 0"
+data = open (r"numbers4.txt", "w")
+data.write(finalString)
+data.close()  
+print (finalString)
