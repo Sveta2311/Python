@@ -9,20 +9,6 @@
 import random
 
 greeting = ('На столе лежит 150 конфет.\nИграют два игрока, делая ход друг после друга.\nПервый ход определяется жеребьёвкой.\nЗа один ход можно забрать не более чем 28 конфет.\nВсе конфеты оппонента достаются сделавшему последний ход.\nСколько конфет нужно взять первому игроку,\nчтобы забрать все конфеты у своего конкурента?')
-            
-def play_game(n, players):
-    count = 0
-    while 150 > 0:
-        print(f'{players[count%2]}, возьмите конфеты:')
-        move = int(input())
-        if move > 28:
-            print(f'Можно взять не более 28 конфет, переход хода!')
-        else:
-            n = n - move
-        if n > 0: print(f'Осталось {n} конфет!')
-        else: print('Все конфеты разобраны.')
-        count +=1
-    return players[not count%2]
 
 print(greeting)
 
@@ -32,6 +18,26 @@ players = [player1, player2]
 
 n = 150
 m = 28
+
+def play_game(n, players):
+    count = random.randint(0,1)
+    print(f'В результате жеребьевки первым ходит игрок: {players[count]}.')
+    n = 150
+    while n > 0:
+        print(f'{players[count%2]}, возьмите конфеты:')
+        move = int(input())
+        if move > 28:
+            print(f'Можно взять не более 28 конфет, переход хода!')
+        else:
+            n = n - move
+        if n > 0: 
+            print(f'Осталось {n} конфет!')
+            count +=1
+        else: 
+            print(f'Все конфеты разобраны!')
+    return players[count%2]
+
+print(greeting)
 
 victory = play_game(n, players)
 if not victory:
