@@ -6,9 +6,11 @@
 # a) добавьте игру против бота
 # b) подумайте как наделить бота 'интеллектом'
 
-from random import randint
+import random
 
 greeting = ('На столе лежит 150 конфет.\nИграют два игрока, делая ход друг после друга.\nПервый ход определяется жеребьёвкой.\nЗа один ход можно забрать не более чем 28 конфет.\nВсе конфеты оппонента достаются сделавшему последний ход.\nСколько конфет нужно взять первому игроку,\nчтобы забрать все конфеты у своего конкурента?')
+
+print(greeting)
 
 def meeting_players():
     player1 = input('Первый игрок, как вас зовут:\n')
@@ -16,42 +18,34 @@ def meeting_players():
     print(f'{player2}')
     return [player1, player2]
 
-def get_rules(players):
-    n = 150
-    m = 28
-    first = int(input(f'{players[0]}, если хотите ходить первым, нажмите 1, если нет, любую другую клавишу:\n'))
-    if first != 1:
-        first = 0
-    return [n, m, int(first)]
-
-def play_game(rules, players):
-    count = 0
-    count = rules[2]
-    while rules[0] > 0:
-        if not count % 2:
-            move = randint(1, rules[1])
-            print(f'Второй игрок: Я забираю {move} конфет!')
+def play_game(n, players):
+    count = random.randint(0,1)
+    print(f'В результате жеребьевки первым ходит игрок: {players[count]}.')
+    
+    while n > 0:
+        if (count % 2) == 1:
+            move = random.randint(1, 28)
+            print(f'Второй игрок:\n Я забираю {move} конфет!')
+            n = n - move
         else:
             print(f'{players[0]}, возьмите конфеты:')
             move = int(input())
-            if move > rules[0] or move > rules[1]:
-                print(f'Можно взять не более {rules[1]} конфет, у нас всего {rules[0]} конфет.')
+            if move > 28:
+                print(f'Можно взять не более 28 конфет, переход хода.')
             else:
-                rules[0] = rules[0] - move
-        if rules[0] > 0:
-            print(f'Осталось {rules[0]} конфет!')
+                n = n - move
+        if n > 0:
+            print(f'Осталось {n} конфет!')
+            count += 1
         else:
             print('Все конфеты разобраны.')
-        count += 1
     return players[count % 2]
-
-print(greeting)
 
 players = meeting_players()
 
-rules = get_rules(players)
+n = 150
 
-victory = play_game(rules, players)
+victory = play_game(n, players)
 if not victory:
     print('Нет победителя!')
 else:
