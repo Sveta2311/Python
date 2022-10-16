@@ -25,20 +25,21 @@ def calculator(slice):
         if el == '-':
             slice[i+1]*=-1
             slice[i] = '+'
-    for i, el in enumerate(slice):
-        match(el):
-            case '*':
-                res = slice[i-1] * slice[i+1]
-                slice.pop(i+1)
-                slice.pop(i)
-                slice[i-1] = res
-            case '/':
-                if slice[i+1] == 0:
-                    print("Ошибка, на нуль делить нельзя!")
-                res = slice[i-1] / slice[i+1]
-                slice.pop(i+1)
-                slice.pop(i)
-                slice[i-1] = res 
+    while ('*' or '/') in slice:
+        for i, el in enumerate(slice):
+            match(el):
+                case '*':
+                    res = slice[i-1] * slice[i+1]
+                    slice.pop(i+1)
+                    slice.pop(i)
+                    slice[i-1] = res
+                case '/':
+                    if slice[i+1] == 0:
+                        print("Элемент принял значение нуль. Делить на нуль нельзя!")
+                    res = slice[i-1] / slice[i+1]
+                    slice.pop(i+1)
+                    slice.pop(i)
+                    slice[i-1] = res 
     while len(slice)>1 and '+' in slice:
         for i, el in enumerate(slice):
             match(el):
