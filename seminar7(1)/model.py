@@ -1,5 +1,5 @@
 def example_us(degree):
-    degree = degree.replace('=', '').replace(' ', '').replace('+', ' + ').replace('-', ' - ').replace('*', ' * ').replace('/', ' / ').replace('(', ' ( ').replace(')', ' ) ')
+    degree = degree.replace('=', '').replace(' ', '').replace('+', ' + ').replace('-', ' - ').replace('*', ' * ').replace('/', ' / ').replace('(', ' ( ').replace(')', ' ) ') 
     list_degree = degree.split()
     for i, el in enumerate(list_degree):
         if el.isdigit():
@@ -18,14 +18,14 @@ def example_us(degree):
         else:
             result = calculator(list_degree)
     return result
-   
+    
 
 def calculator(slice):
     for i, el in enumerate(slice):
         if el == '-':
             slice[i+1]*=-1
             slice[i] = '+'
-    while ('*' or '/') in slice:
+    while '*' in slice or '/' in slice:
         for i, el in enumerate(slice):
             match(el):
                 case '*':
@@ -33,14 +33,14 @@ def calculator(slice):
                     slice.pop(i+1)
                     slice.pop(i)
                     slice[i-1] = res
-                case '/':
+                case '/': 
                     if slice[i+1] == 0:
-                        print("Ошибка: делить на нуль нельзя!")
+                        print("Ошибка: на ноль делить нельзя!")
                     res = slice[i-1] / slice[i+1]
                     slice.pop(i+1)
                     slice.pop(i)
-                    slice[i-1] = res 
-    while len(slice)>1 and '+' in slice:
+                    slice[i-1] = res  
+    while len(slice)>1 and '+' in slice: 
         for i, el in enumerate(slice):
             match(el):
                 case '+':
@@ -49,5 +49,3 @@ def calculator(slice):
                     slice.pop(i)
                     slice[i-1] = res
     return res
-
-
