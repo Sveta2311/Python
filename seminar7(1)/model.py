@@ -35,7 +35,7 @@ def calculator(slice):
                     slice[i-1] = res
                 case '/': 
                     if slice[i+1] == 0:
-                        print("Ошибка: на ноль делить нельзя!")
+                        print("Ошибка: на нуль делить нельзя!")
                     res = slice[i-1] / slice[i+1]
                     slice.pop(i+1)
                     slice.pop(i)
